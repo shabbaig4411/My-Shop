@@ -8,7 +8,7 @@
 </head>
 <body>
 	<h2>Welcome to My Shop</h2>
-	<form action="LoginController" method="post">
+	<form action="LoginController" method="post" >
 
 		<table>
 			<tr>
@@ -32,11 +32,6 @@
 
 			</tr>
 		</table>
-		<%
-		if (request.getAttribute("logged") != null) {
-			out.print((String)request.getAttribute("logged"));
-		}
-		%>
 		
 		<%
 		if (request.getAttribute("error") != null) {

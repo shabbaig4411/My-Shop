@@ -40,10 +40,7 @@
 				<td>Re-Enter Password</td>
 				<td><input type="password" name="password1"
 					placeholder="Re-Enter Password" required /></td>
-				<%if(request.getAttribute("msg")!=null){
-				out.print((String) request.getAttribute("msg"));
-				}
-				%>
+
 			</tr>
 
 			<tr>
@@ -51,8 +48,14 @@
 
 			</tr>
 		</table>
-		<%if(request.getAttribute("result")!=null){
-		out.print((String) request.getAttribute("result"));
+		<%
+		if (request.getAttribute("msg") != null) {
+			out.print((String) request.getAttribute("msg"));
+		}
+		%>
+		<%
+		if (request.getAttribute("result") != null) {
+			out.print((String) request.getAttribute("result"));
 		}
 		%>
 

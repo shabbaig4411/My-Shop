@@ -6,6 +6,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 import com.shop.model_service.SignInImpl;
 
@@ -17,6 +19,8 @@ public class LoginController extends HttpServlet {
 		super();
 
 	}
+
+	RequestDispatcher rd = null;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -30,16 +34,21 @@ public class LoginController extends HttpServlet {
 
 		SignInImpl log = new SignInImpl();
 		log.connectionDB();
-		boolean result = log.verify(mobile_email, password);
 		
+		boolean result = log.verify(mobile_email, password);
+
 		if (result) {
-			request.setAttribute("logged", "Logged successfully.");
-			RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+//			request.setAttribute("logged", "Logged successfully.");
+//			rd = request.getRequestDispatcher("index.jsp");
+//			rd.forward(request, response);
+			HttpSession session = request.getSession(true);
+			session.setAttribute("email_number", mobile_email);
+			// we can invoke "/WEB-INF/view/home.jsp" directly and also like below example
+			rd = request.getRequestDispatcher("homePageConnector");
 			rd.forward(request, response);
-		} 
-		else {
+		} else {
 			request.setAttribute("error", "Email/Mobile or Password is incorrect!...");
-			RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+			rd = request.getRequestDispatcher("index.jsp");
 			rd.forward(request, response);
 		}
 	}

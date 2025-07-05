@@ -8,7 +8,6 @@ public class SignInImpl implements SignIn {
 
 	private Connection con = null;
 	private Statement st = null;
-	// RequestDispatcher rd = null;
 
 	@Override
 	public void connectionDB() {
@@ -40,17 +39,12 @@ public class SignInImpl implements SignIn {
 
 	@Override
 	public boolean verify(String mobile_email, String password) {
-		try {
-			
-			ResultSet result = st.executeQuery("SELECT * FROM allcustomersdata WHERE mobile= '" + mobile_email
-					+ "' || email ='" + mobile_email + "' "); // && password1='" + password + "'
-				//return result.next();
+		try {			
+			ResultSet result = st.executeQuery("SELECT password FROM allcustomersdata WHERE mobile= '" + mobile_email
+					+ "' || email ='" + mobile_email + "' ");			
 			while (result.next()) {
-				String mobile = result.getString("mobile");
-				String email = result.getString("email");
 				String password1 = result.getString("password");
-
-				if (mobile.equals(mobile_email) || email.equals(mobile_email) && password1.equals(password) == true) {
+				if (password1.equals(password)) {
 					return true;
 				}
 			}
@@ -60,3 +54,10 @@ public class SignInImpl implements SignIn {
 		return false;
 	}
 }
+
+
+
+
+
+
+
