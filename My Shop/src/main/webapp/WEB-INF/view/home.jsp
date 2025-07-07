@@ -14,6 +14,12 @@
 			<tr>
 				<td><a href="distributorsController" method="get">Distributors</a>
 				</td>
+				<td><a href="accountsController" method="get">Accounts</a>
+				</td>
+				<td><a href="HomeController" method="get">Home</a>
+				</td>
+				<td><a href="veiwController" method="get">Veiw</a>
+				</td>
 				<td><a href="customersController" method="get">Customers</a></td>
 			</tr>
 

@@ -3,7 +3,7 @@ import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import java.io.IOException;
-import com.shop.model_service.SignInImpl;
+import com.shop.model_service.Services_Impl;
 
 @WebServlet("/SignInController")
 public class SignInController extends HttpServlet {
@@ -28,17 +28,17 @@ public class SignInController extends HttpServlet {
 		String password1 = request.getParameter("password");
 		String password2 = request.getParameter("password1");
 		
-		response.setContentType("text/html");
 		RequestDispatcher rd = null;
 
 		if (password1.equals(password2) || password1 == password2) {
-			SignInImpl creat = new SignInImpl();
+			Services_Impl creat = new Services_Impl();
 			creat.connectionDB();
+			
 			boolean result = creat.newUser(name, mobile, email, password1);
 			if (result) {
 
-				request.setAttribute("result", "Account Created Successfully. Go to <a href='index.jsp'>Login</a>");
-				rd = request.getRequestDispatcher("SignIn.jsp");
+				request.setAttribute("result", "Account Created Successfully.");
+				rd = request.getRequestDispatcher("index.jsp");
 				rd.forward(request, response);
 			}
 

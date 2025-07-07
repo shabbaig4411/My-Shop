@@ -1,33 +1,39 @@
 package com.shop.controller;
 
-import java.io.IOException;
-
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
 
-@WebServlet("/customersController")
-public class customersController extends HttpServlet {
+@WebServlet("/addCustomerController")
+public class addCustomerController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-      public customersController() {
+ 
+    public addCustomerController() {
         super();
-      
+       
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd =	request.getRequestDispatcher("/WEB-INF/view/addCustomer.jsp");
-		rd.forward(request, response);
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+		
+		out.print("Don't Refresh the page.....Please wait.");
+	RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/addDistributor.jsp");
+	rd.forward(request, response);
 		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
-		String e_mobile = (String)session.getAttribute("email_number");
-		request.setAttribute("email", e_mobile);
+		
+		// String name = request.getParameter("name");
+		
+		
+		
 		
 	}
 

@@ -1,34 +1,36 @@
 package com.shop.controller;
 
-import java.io.IOException;
-
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import java.io.IOException;
+import java.sql.Date;
 
-@WebServlet("/customersController")
-public class customersController extends HttpServlet {
+
+@WebServlet("/veiwController")
+public class veiwController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-      public customersController() {
+ 
+    public veiwController() {
         super();
-      
+        
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd =	request.getRequestDispatcher("/WEB-INF/view/addCustomer.jsp");
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/veiw.jsp");
 		rd.forward(request, response);
 		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
-		String e_mobile = (String)session.getAttribute("email_number");
-		request.setAttribute("email", e_mobile);
-		
+		String name = request.getParameter("name");
+		Date date = (Date) request.getAttribute("date");
+		// using above name and date search data in customers table, 
+		//then return back data to browser .
 	}
 
 }

@@ -9,26 +9,58 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.sql.*;
+
+import com.shop.model_service.Services_Impl;
 
 @WebServlet("/distributorsController")
 public class distributorsController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-      public distributorsController() {
-        super();
-            }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	RequestDispatcher rd =	request.getRequestDispatcher("/WEB-INF/view/distributors.jsp");
-	rd.forward(request, response);
+	public distributorsController() {
+		super();
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		int userId = 0;
+		int distributorId =0;
+		
+		RequestDispatcher rd = null;
+		try {
+			
+			Services_Impl service = new Services_Impl();
+			service.connectionDB();
+			distributorId = service.getDid(userId);
+			
+			
+			HttpSession session = request.getSession(false);
+			userId = (int) session.getAttribute("userId");
+			
+			
+			ResultSet distributor =	(ResultSet)service.getDistributors(userId);
+			request.setAttribute("distributor", distributor);
+			rd = request.getRequestDispatcher("/WEB-INF/view/distributors.jsp");
+			rd.forward(request, response);
+
+		} catch (Exception e) {
+			request.setAttribute("error", "Login Again...");
+			rd = request.getRequestDispatcher("index.jsp");
+			rd.forward(request, response);
+		}
+
+		
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		//  UserId is  present in session //
+		int userId=0;
+		
 		HttpSession session = request.getSession(false);
-		String e_mobile = (String)session.getAttribute("email_number");
-		request.setAttribute("email", e_mobile);
-		
-		
+		userId = (int) session.getAttribute("userId");
+
 	}
 
 }
