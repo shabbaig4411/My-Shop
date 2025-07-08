@@ -42,12 +42,12 @@ public class addDistributorController extends HttpServlet {
 		String name = request.getParameter("name");
 		String mobile = request.getParameter("mobile");
 		String email = request.getParameter("email");
-		int userId = 0;
-		int distributorId=0;
+		String userId = null;
+		String distributorId=null;
 		RequestDispatcher rd = null;
 		try {
 			HttpSession session = request.getSession(false);
-			userId = (int) session.getAttribute("userId");
+			userId = (String) session.getAttribute("userId");
 			
 			Services_Impl service = new Services_Impl();
 			service.connectionDB();

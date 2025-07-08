@@ -18,6 +18,7 @@
 			<th> Name</th>
 			<th> Mobile</th>
 			<th> Email</th>
+			<th>Edit</th>
 			
 		</tr>
 
@@ -33,6 +34,7 @@
 			<td><%=result.getString("name")%></td>
 			<td><%=result.getString("mobile")%></td>
 			<td><%=result.getString("email")%></td>
+			<td><a href="editDistributorController?distributorId=<%=result.getString("distributorId")%>">Edit</a></td>
 		</tr>
 
 

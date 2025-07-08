@@ -23,8 +23,8 @@ public class distributorsController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		int userId = 0;
-		int distributorId =0;
+		String userId = null;
+		String distributorId =null;
 		
 		RequestDispatcher rd = null;
 		try {
@@ -35,7 +35,7 @@ public class distributorsController extends HttpServlet {
 			
 			
 			HttpSession session = request.getSession(false);
-			userId = (int) session.getAttribute("userId");
+			userId =(String) session.getAttribute("userId");
 			
 			
 			ResultSet distributor =	(ResultSet)service.getDistributors(userId);
@@ -56,10 +56,10 @@ public class distributorsController extends HttpServlet {
 			throws ServletException, IOException {
 		
 		//  UserId is  present in session //
-		int userId=0;
+		String userId=null;
 		
 		HttpSession session = request.getSession(false);
-		userId = (int) session.getAttribute("userId");
+		userId = (String) session.getAttribute("userId");
 
 	}
 

@@ -12,7 +12,7 @@
 		<table>
 
 			<tr>
-				<td><a href="distributorsController" method="get">Distributors</a>
+				<td><a href="distributorsController" >Distributors</a>
 				</td>
 				<td><a href="accountsController" method="get">Accounts</a>
 				</td>

@@ -31,7 +31,7 @@ public class homePageConnector extends HttpServlet {
 		String mobile_email= (String)request.getAttribute("mobile_email");
 		Services_Impl service = new Services_Impl();
 		service.connectionDB();
-		int userId = service.getuserId(mobile_email);
+		String userId = service.getuserId(mobile_email);
 		
 		HttpSession session = request.getSession(true);
 		session.setAttribute("userId", userId);

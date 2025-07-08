@@ -21,7 +21,7 @@ public class Services_Impl implements Services {
 			st.executeUpdate(
 					"CREATE TABLE IF NOT EXISTS myShopUsers(userId INT AUTO_INCREMENT PRIMARY KEY,name VARCHAR(40) NOT NULL,mobile VARCHAR(10) UNIQUE,email VARCHAR(40) UNIQUE,password VARCHAR(35) NOT NULL)");
 			st.executeUpdate(
-					"CREATE TABLE IF NOT EXISTS usersDistributors(userId INT NOT NULL,distributorId INT PRIMARY KEY, name VARCHAR(40),mobile VARCHAR(10) NOT NULL,email VARCHAR(40))");
+					"CREATE TABLE IF NOT EXISTS usersDistributors(userId INT NOT NULL,distributorId INT PRIMARY KEY, name VARCHAR(40) NOT NULL,mobile VARCHAR(10) NOT NULL,email VARCHAR(40) NOT NULL)");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -59,12 +59,12 @@ public class Services_Impl implements Services {
 	}
 
 	@Override
-	public int getuserId(String mobile_email) {
+	public String getuserId(String mobile_email) {
 		try {
 			ResultSet result = st.executeQuery("SELECT userId FROM myShopUsers WHERE mobile= '" + mobile_email
 					+ "' || email ='" + mobile_email + "' ");
 			while (result.next()) {
-				int userId = result.getInt("userId");
+				String userId = result.getString("userId");
 
 				return userId;
 			}
@@ -72,12 +72,13 @@ public class Services_Impl implements Services {
 		} catch (Exception e) {
 
 		}
-		return 0;
+		return null;
 	}
 
 	@Override
-	public ResultSet addDistributors(int userId, int distributorId, String name, String mobile, String email) {
+	public ResultSet addDistributors(String userId, String distributorId, String name, String mobile, String email) {
 		try {
+
 			result = st.executeQuery(
 					"SELECT name FROM usersDistributors WHERE userId='" + userId + "' AND name='" + name + "'");
 			if (!result.next()) {
@@ -104,30 +105,83 @@ public class Services_Impl implements Services {
 	}
 
 	@Override
-	public int getDid(int userId) {
+	public String getDid(String userId) {
 
 		try {
 			result = st.executeQuery(
 					"SELECT MAX(distributorId) AS mdid FROM usersDistributors WHERE userId='" + userId + "'");
 			if (result.next()) {
 				int did = result.getInt("mdid");
-				return ++did;
+				++did;
+				String idid = Integer.toString(did);
+				return idid;
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return 1;
+		return null;
 	}
 
 	@Override
-	public ResultSet getDistributors(int userId) {
+	public ResultSet getDistributors(String userId) {
 		try {
 			result = st.executeQuery("SELECT * FROM usersDistributors WHERE userId='" + userId + "'");
 			return result;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return null;
+	}
+
+	@Override
+	public ResultSet getDistributor(String userId, String distributorId) {
+		ResultSet result = null;
+		try {
+			String query = "SELECT * FROM usersdistributors WHERE userId = ? AND distributorId = ?";
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setString(1, userId);
+			ps.setString(2, distributorId);
+			result = ps.executeQuery();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+
+	}
+
+	@Override
+	public ResultSet updateDistributor(String userId, String distributorId, String name, String mobile, String email) {
+
+		String dname = null;
+		try {
+			result = st.executeQuery("SELECT name FROM usersDistributors WHERE userId='" + userId
+					+ "' AND distributorId='" + distributorId + "'");
+			while (result.next()) {
+				dname = (String) result.getString("name");
+
+				if (!dname.equals(name)) {
+					st.executeUpdate("UPDATE usersDistributors SET name='" + name + "',mobile='" + mobile + "',email='"
+							+ email + "' WHERE userId='" + userId + "' AND distributorId='" + distributorId + "'");
+					result = st.executeQuery("SELECT * FROM usersDistributors WHERE userId='" + userId + "'");
+					return result;
+
+				}else if (dname.equals(name)) {
+					st.executeUpdate("UPDATE usersDistributors SET mobile='" + mobile + "',email='"
+							+ email + "' WHERE userId='" + userId + "' AND distributorId='" + distributorId + "' AND name='" + dname + "'");
+					result = st.executeQuery("SELECT * FROM usersDistributors WHERE userId='" + userId + "'");
+					return result;
+
+				}
+				else {
+					result = st.executeQuery("SELECT * FROM usersDistributors WHERE userId='" + userId + "'");
+					return result;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		return null;
 	}
 
