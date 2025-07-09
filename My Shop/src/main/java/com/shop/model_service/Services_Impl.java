@@ -185,6 +185,18 @@ public class Services_Impl implements Services {
 		return null;
 	}
 
+	@Override
+	public void deleteDistributor(String userId,String distributorId) {		
+		try {
+			st.executeUpdate("DELETE FROM usersDistributors WHERE userId='"+userId+"' AND distributorId='"+distributorId+"'");			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}		
+	}
+
+	
+	
+	
 	/**
 	 * public void distributorsTable() { try { st.executeUpdate( "CREATE TABLE IF
 	 * NOT EXISTS usersDistributors(userId INT NOT NULL,distributorId INT

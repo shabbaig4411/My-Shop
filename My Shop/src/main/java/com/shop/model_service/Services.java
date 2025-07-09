@@ -12,7 +12,7 @@ public interface Services {
 	public ResultSet addDistributors(String userId,String distributorId,String name,String mobile,String email);
 	public ResultSet getDistributor(String userId,String distributorId);
 	public ResultSet updateDistributor(String userId,String distributorId,String name, String mobile,String email);
-	
+	public void deleteDistributor(String userId,String distributorId);
 	//public void distributorsTable();
 	//public void createDb_tables();
 	//public ResultSet getDistributor(int userId, int distributorId);

@@ -17,9 +17,7 @@
 			<th> Id</th>
 			<th> Name</th>
 			<th> Mobile</th>
-			<th> Email</th>
-			<th>Edit</th>
-			
+			<th> Email</th>		
 		</tr>
 
 		<%
@@ -35,6 +33,8 @@
 			<td><%=result.getString("mobile")%></td>
 			<td><%=result.getString("email")%></td>
 			<td><a href="editDistributorController?distributorId=<%=result.getString("distributorId")%>">Edit</a></td>
+			<td><a href="deleteDistributorController?distributorId=<%=result.getString("distributorId")%>">Delete</a></td>
+			
 		</tr>
 
 
