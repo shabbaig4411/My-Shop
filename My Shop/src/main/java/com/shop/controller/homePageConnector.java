@@ -28,16 +28,23 @@ public class homePageConnector extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String mobile_email= (String)request.getAttribute("mobile_email");
-		Services_Impl service = new Services_Impl();
-		service.connectionDB();
-		String userId = service.getuserId(mobile_email);
-		
-		HttpSession session = request.getSession(true);
-		session.setAttribute("userId", userId);
-		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/home.jsp");
-		rd.forward(request, response);
+		try {
+			String mobile_email = (String) request.getAttribute("mobile_email");
+			Services_Impl service = new Services_Impl();
+			service.connectionDB();
+			String userId = service.getuserId(mobile_email);
+
+			HttpSession session = request.getSession(true);
+			session.setAttribute("userId", userId);
+			if (userId == null) {
+				response.sendRedirect("index.jsp");
+			} else {
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/home.jsp");
+				rd.forward(request, response);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

@@ -21,7 +21,7 @@ public class Services_Impl implements Services {
 			st.executeUpdate(
 					"CREATE TABLE IF NOT EXISTS myShopUsers(userId INT AUTO_INCREMENT PRIMARY KEY,name VARCHAR(40) NOT NULL,mobile VARCHAR(10) UNIQUE,email VARCHAR(40) UNIQUE,password VARCHAR(35) NOT NULL)");
 			st.executeUpdate(
-					"CREATE TABLE IF NOT EXISTS usersDistributors(userId INT NOT NULL,distributorId INT PRIMARY KEY, name VARCHAR(40) NOT NULL,mobile VARCHAR(10) NOT NULL,email VARCHAR(40) NOT NULL)");
+					"CREATE TABLE IF NOT EXISTS usersDistributors(userId INT NOT NULL,distributorId INT NOT NULL, name VARCHAR(40) NOT NULL,mobile VARCHAR(10) NOT NULL,email VARCHAR(40) NOT NULL)");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -197,13 +197,6 @@ public class Services_Impl implements Services {
 	
 	
 	
-	/**
-	 * public void distributorsTable() { try { st.executeUpdate( "CREATE TABLE IF
-	 * NOT EXISTS usersDistributors(userId INT NOT NULL,distributorId INT
-	 * AUTO_INCREMENT PRIMARY KEY, name VARCHAR(40) NOT NULL,mobile VARCHAR(10) NOT
-	 * NULL,email VARCHAR(40))"); } catch (Exception e) {
-	 * 
-	 * } }
-	 */
+
 
 }

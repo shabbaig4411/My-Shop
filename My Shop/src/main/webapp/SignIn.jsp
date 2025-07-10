@@ -48,6 +48,7 @@
 
 			</tr>
 		</table>
+		<a href="index.jsp"> Login </a>
 		<%
 		if (request.getAttribute("msg") != null) {
 			out.print((String) request.getAttribute("msg"));

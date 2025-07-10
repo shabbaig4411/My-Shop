@@ -24,40 +24,38 @@ public class distributorsController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String userId = null;
-		String distributorId =null;
-		
+		String distributorId = null;
+
 		RequestDispatcher rd = null;
 		try {
+			HttpSession session = request.getSession(false);
+			userId = (String) session.getAttribute("userId");
 			
+			// Use like below ( if & else)  statement in each controller to auto refresh the page when user get back the page.//
+			if(userId==null) {
+				response.sendRedirect("index.jsp");
+			}else {
 			Services_Impl service = new Services_Impl();
 			service.connectionDB();
 			distributorId = service.getDid(userId);
-			
-			
-			HttpSession session = request.getSession(false);
-			userId =(String) session.getAttribute("userId");
-			
-			
-			ResultSet distributor =	(ResultSet)service.getDistributors(userId);
+
+			ResultSet distributor = (ResultSet) service.getDistributors(userId);
 			request.setAttribute("distributor", distributor);
 			rd = request.getRequestDispatcher("/WEB-INF/view/distributors.jsp");
-			rd.forward(request, response);
-
+			rd.forward(request, response);}
 		} catch (Exception e) {
-			request.setAttribute("error", "Login Again...");
+			request.setAttribute("message", "Login Again...");
 			rd = request.getRequestDispatcher("index.jsp");
 			rd.forward(request, response);
 		}
-
-		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		//  UserId is  present in session //
-		String userId=null;
-		
+
+		// UserId is present in session //
+		String userId = null;
+
 		HttpSession session = request.getSession(false);
 		userId = (String) session.getAttribute("userId");
 
